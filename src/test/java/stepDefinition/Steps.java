@@ -6,17 +6,22 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+
+import pageObjects.AddAccountPage;
 import pageObjects.IndexPage;
+import pageObjects.MangerPage;
 
 public class Steps extends BaseClass {
 
@@ -115,6 +120,65 @@ public class Steps extends BaseClass {
 	@Then("User should see sucsess message like {string}")
 	public void user_should_see_sucsess_message_like(String sucessmsm) {
 		Assert.assertEquals(sucessmsm, indexPage.getsucmessage().toString());
+	}
+
+	// ***********Logout steps **********************
+
+	@When("User clicks on Logout")
+	public void user_clicks_on_logout() throws InterruptedException {
+		mangerPage = new MangerPage(driver);
+		mangerPage.clickOnLogout();
+		Thread.sleep(2000);
+	}
+
+	@Then("User should see an alert with {string}")
+	public void user_should_see_an_alert_with(String alert) {
+		String Actual = driver.switchTo().alert().getText();
+		Assert.assertTrue(Actual.contains(alert));
+		driver.switchTo().alert().accept();
+	}
+
+	// *******************AddAccount******************
+
+	@When("User clicks on add new account")
+	public void user_clicks_on_add_new_account() throws InterruptedException {
+		mangerPage = new MangerPage(driver);
+		mangerPage.clickOnNewAccount();
+		Thread.sleep(3000);
+		WebElement frame2 = driver.findElement(By.id("google_ads_iframe_/24132379/INTERSTITIAL_DemoGuru99_0"));
+		driver.switchTo().frame(frame2);
+		driver.findElement(By.id("dismiss-button")).click();
+
+		driver.switchTo().defaultContent();
+
+		Thread.sleep(3000);
+	}
+
+	@Then("User should see an message like {string}")
+	public void user_should_see_an_message_like(String string) {
+		accountPage = new AddAccountPage(driver);
+		// Assert.assertTrue(accountPage.getTitle().contains(string));
+		Assert.assertEquals(accountPage.getTitle(), string);
+	}
+
+	@When("User enter CustomerId as {string} and AccountType as {string} and initialDeposit as {string}")
+	public void user_enter_customer_id_as_and_account_type_as_current_and_initial_deposit_as(String id, String type,
+			String deposit) throws InterruptedException {
+		accountPage.setCustomerId(id);
+		accountPage.setType(type);
+		accountPage.setInitialDeposit(deposit);
+		Thread.sleep(3000);
+	}
+
+	@And("User cliks on Submit")
+	public void User_cliks_on_Submit() {
+		accountPage.clikOnSubmit();
+	}
+
+	@Then("Page Url should be {string}")
+	public void page_url_should_be(String string) {
+		// Assert.assertTrue(accountPage.getUrl().contains(string));
+		Assert.assertEquals(accountPage.getUrl(), string);
 	}
 
 }
