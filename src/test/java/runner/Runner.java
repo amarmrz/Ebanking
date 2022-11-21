@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(stepNotifications = true, plugin = { "pretty",
-		"html:target/Myreport.html" }, features = "Features\\AddAccount.feature", glue = {
+		"html:target/Myreport.html" }, features = "Features\\EndToEnd.feature", glue = {
 				"stepDefinition" }, dryRun = false, monochrome = true)
 public class Runner {
 

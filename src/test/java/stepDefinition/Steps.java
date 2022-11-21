@@ -180,5 +180,33 @@ public class Steps extends BaseClass {
 		// Assert.assertTrue(accountPage.getUrl().contains(string));
 		Assert.assertEquals(accountPage.getUrl(), string);
 	}
+	// ******************EndToEnd************
+
+	@When("user cliks on change password")
+	public void user_cliks_on_change_password() throws InterruptedException {
+		indexPage = new IndexPage(driver);
+		indexPage.clickOnChangePassword();
+		Thread.sleep(2000);
+	}
+
+	@Then("User should see a message like {string}")
+	public void user_should_see_a_message_like(String string) {
+		Assert.assertEquals(indexPage.getTitle(), string);
+	}
+
+	@When("User enter required info")
+	public void user_enter_required_info() {
+		indexPage.setOldPassword("hello");
+		indexPage.setNewPassword("hellohello");
+		indexPage.setConfirmPassword("hellohello");
+
+	}
+
+	@When("User clicks on submit")
+	public void user_clicks_on_submit() {
+		indexPage.clickOnSubmitTochangePassword();
+	}
+
+	// need some validation
 
 }

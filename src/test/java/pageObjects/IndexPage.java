@@ -48,6 +48,30 @@ public class IndexPage {
 	@CacheLookup
 	WebElement sucMessage;
 
+	@FindBy(xpath = "//a[normalize-space()='Change Password']")
+	@CacheLookup
+	WebElement btnchangePassword;
+
+	@FindBy(name = "oldpassword")
+	@CacheLookup
+	WebElement txtOldPassword;
+
+	@FindBy(name = "newpassword")
+	@CacheLookup
+	WebElement txtNewPassword;
+
+	@FindBy(name = "confirmpassword")
+	@CacheLookup
+	WebElement txtConfirmPassword;
+
+	@FindBy(name = "sub")
+	@CacheLookup
+	WebElement btnSub;
+
+	@FindBy(xpath = "//p[@class='heading3']")
+	@CacheLookup
+	WebElement titleChangePassword;
+
 	public void setUserName(String username) {
 		txtId.clear();
 		txtId.sendKeys(username);
@@ -83,6 +107,34 @@ public class IndexPage {
 
 	public void clickOnSubmit() {
 		btnSubmit.click();
+	}
+
+	public void clickOnChangePassword() {
+		btnchangePassword.click();
+	}
+
+	public void setOldPassword(String password) {
+		txtOldPassword.clear();
+		txtOldPassword.sendKeys(password);
+	}
+
+	public void setNewPassword(String newPassword) {
+		txtNewPassword.clear();
+		txtOldPassword.sendKeys(newPassword);
+	}
+
+	public void setConfirmPassword(String confPassword) {
+		txtConfirmPassword.clear();
+		txtConfirmPassword.sendKeys(confPassword);
+	}
+
+	public void clickOnSubmitTochangePassword() {
+		btnSub.click();
+	}
+
+	public String getTitle() {
+		String message = titleChangePassword.getText();
+		return message;
 	}
 
 }
